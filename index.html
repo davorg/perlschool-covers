@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1D8QXD8T8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-R1D8QXD8T8');
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Canonical -->
+    <link rel="canonical" href="https://cover.perlschool.com/" />
+
+    <!-- Primary meta -->
+    <title>Perl School – Cover Generator</title>
+    <meta name="description" content="Create consistent Perl School book covers in your browser: choose colours, set title/subtitle/author, apply the bead image and export a PNG." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Perl School – Cover Generator" />
+    <meta property="og:description" content="Create consistent Perl School book covers in your browser: choose colours, set title/subtitle/author, apply the bead image and export a PNG." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cover.perlschool.com/" />
+    <meta property="og:image" content="https://cover.perlschool.com/img/og.png" />
+    <meta property="og:image:alt" content="Preview of the Perl School cover generator showing a tinted bead background, bold title and Perl School logo." />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Perl School – Cover Generator" />
+    <meta name="twitter:description" content="Create consistent Perl School book covers in your browser: choose colours, set title/subtitle/author, apply the bead image and export a PNG." />
+    <meta name="twitter:image" content="https://cover.perlschool.com/img/og.png" />
+    <meta name="twitter:image:alt" content="Preview of the Perl School cover generator showing a tinted bead background, bold title and Perl School logo." />
+
+    <!-- Nice-to-haves -->
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="robots" content="index,follow" />
+
+  </head>
+  <body>
+    <aside class="panel" id="controls">
+      <h1><a href="https://perlschool.com/">Perl School</a> – Cover Generator</h1>
+      <div class="section">
+        <label>Image settings</label>
+        <div class="row" style="margin-top:6px">
+          <div><label>Tint colour</label><input type="color" id="tint" value="#87a7ba"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <label>Title</label>
+        <input type="text" id="title1" placeholder="e.g. Selenium and" value="">
+        <input type="text" id="title2" placeholder="Big second line (e.g. Perl)" value="">
+      </div>
+
+      <div class="section">
+        <label>Subtitle</label>
+        <input type="text" id="subtitle" placeholder="Subtitle" value="">
+      </div>
+
+      <div class="section">
+        <label>Author</label>
+        <input type="text" id="author" placeholder="Author" value="">
+      </div>
+
+      <div class="section">
+        <button class="btn" id="downloadPng">Download PNG</button>
+        <hr>
+        <div class="stack">
+          <button class="btn secondary" id="savePreset">Save preset</button>
+          <button class="btn secondary" id="loadPreset">Load preset</button>
+        </div>
+      </div>
+      <p class="small hint">All processing is local in your browser.</p>
+    </aside>
+
+    <main class="stage">
+      <canvas id="c" aria-label="Cover preview"></canvas>
+    </main>
+
+    <script src="/js/script.js"></script>
+  </body>
+</html>
+
