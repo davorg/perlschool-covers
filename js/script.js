@@ -96,18 +96,31 @@
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     
-    // Account for control panel width (360px + gap + margins)
-    const controlPanelWidth = 360;
-    const bodyPadding = 32; // 16px on each side from body padding
-    const gap = 16; // gap between panel and stage
+    // Check if we're in mobile layout (matches CSS media query)
+    const isMobile = viewportWidth <= 768;
     
-    // Available space for canvas (be more conservative)
-    const availableWidth = viewportWidth - controlPanelWidth - bodyPadding - gap;
-    const availableHeight = viewportHeight - bodyPadding; // Account for top/bottom padding
+    const bodyPadding = isMobile ? 24 : 32; // 12px on each side for mobile, 16px for desktop
+    
+    let availableWidth, availableHeight;
+    
+    if (isMobile) {
+      // Mobile: stacked layout, canvas takes full width
+      availableWidth = viewportWidth - bodyPadding;
+      // Reserve space for the control panel below (roughly estimate its height)
+      const estimatedPanelHeight = 400; // Rough estimate of panel height
+      const gap = 12; // Mobile gap
+      availableHeight = viewportHeight - bodyPadding - estimatedPanelHeight - gap;
+    } else {
+      // Desktop: side-by-side layout
+      const controlPanelWidth = 360;
+      const gap = 16; // gap between panel and stage
+      availableWidth = viewportWidth - controlPanelWidth - bodyPadding - gap;
+      availableHeight = viewportHeight - bodyPadding;
+    }
     
     // Add generous safety margins to ensure no scrollbars ever appear
     const maxWidth = Math.max(250, availableWidth - 100);  // More conservative
-    const maxHeight = Math.max(350, availableHeight - 100); // More conservative
+    const maxHeight = Math.max(300, availableHeight - 100); // More conservative
     
     // Calculate aspect ratio of the native image
     const nativeAspectRatio = state.nativeWidth / state.nativeHeight;
