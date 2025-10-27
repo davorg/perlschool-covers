@@ -173,12 +173,12 @@ canvas {
     gap: 12px;
     padding: 12px;
   }
-  
+
   .panel {
     width: 100%;
     order: 2; /* Panel goes below canvas on mobile */
   }
-  
+
   .stage {
     order: 1; /* Canvas goes above panel on mobile */
     min-height: 50vh; /* Ensure canvas gets reasonable space */

@@ -32,7 +32,7 @@
       document.fonts.add(bodyFontFace);
       state.bodyFont = 'TrueNo-Regular';
       console.log('TrueNo Regular font loaded for body text');
-      
+
       // Re-render with fonts loaded
       if (state.img) render();
     } catch (e) {
@@ -91,18 +91,18 @@
   // Calculate and set optimal canvas size
   function setCanvasSize() {
     if (!state.img || !state.nativeWidth || !state.nativeHeight) return;
-    
+
     // Get viewport dimensions
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    
+
     // Check if we're in mobile layout (matches CSS media query)
     const isMobile = viewportWidth <= 768;
-    
+
     const bodyPadding = isMobile ? 24 : 32; // 12px on each side for mobile, 16px for desktop
-    
+
     let availableWidth, availableHeight;
-    
+
     if (isMobile) {
       // Mobile: stacked layout, canvas takes full width
       availableWidth = viewportWidth - bodyPadding;
@@ -117,31 +117,31 @@
       availableWidth = viewportWidth - controlPanelWidth - bodyPadding - gap;
       availableHeight = viewportHeight - bodyPadding;
     }
-    
+
     // Add generous safety margins to ensure no scrollbars ever appear
     const maxWidth = Math.max(250, availableWidth - 100);  // More conservative
     const maxHeight = Math.max(300, availableHeight - 100); // More conservative
-    
+
     // Calculate aspect ratio of the native image
     const nativeAspectRatio = state.nativeWidth / state.nativeHeight;
-    
+
     // Calculate the size that fits within BOTH constraints using the more restrictive one
     const scaleByWidth = maxWidth / state.nativeWidth;
     const scaleByHeight = maxHeight / state.nativeHeight;
-    
+
     // Use the smaller scale factor to ensure it fits in both dimensions
     const finalScale = Math.min(scaleByWidth, scaleByHeight);
-    
+
     const displayWidth = Math.round(state.nativeWidth * finalScale);
     const displayHeight = Math.round(state.nativeHeight * finalScale);
-    
+
     // Set canvas display dimensions
     canvas.width = displayWidth;
     canvas.height = displayHeight;
-    
+
     // Calculate scale factor from native to display
     state.scale = canvas.width / state.nativeWidth;
-    
+
     console.log('Canvas sizing:');
     console.log('  Native resolution:', state.nativeWidth, 'x', state.nativeHeight);
     console.log('  Display size:', canvas.width, 'x', canvas.height);
@@ -239,10 +239,10 @@
       // Temporarily use export canvas and native scale
       // We'll modify the render function to accept parameters
       state.scale = 1; // Native scale
-      
+
       // Call render with the export context
       renderToContext(exportCtx, exportCanvas);
-      
+
       // Return the data URL
       return exportCanvas.toDataURL('image/png');
     } finally {
@@ -285,7 +285,7 @@
     // draw image to fill entire canvas
     if(state.img){
       console.log('Drawing image with opacity:', imgOpacity, 'blend:', blend);
-      
+
       renderCtx.globalAlpha = imgOpacity;
       renderCtx.globalCompositeOperation = blend;
       // Draw image to fill entire canvas (positioned at top-left, scaled to fill)
@@ -351,14 +351,14 @@
       const nativeMinSize = 40;
       const baseSize = nativeBaseSize * scale;
       const minSize = nativeMinSize * scale;
-      
+
       // Use fitText to make it fill the width
       const subFit = fitTextForContext(renderCtx, {text:sub, maxWidth:colW, maxSize:baseSize, minSize:minSize, family:bodyFamily, weight:'normal', letter:0});
-      
+
       renderCtx.font = `normal ${subFit.size}px '${bodyFamily}', system-ui`;
       renderCtx.fillStyle = colorLuminance(ink, -0.06); // slightly dimmer than title
       renderCtx.textBaseline = 'alphabetic';
-      
+
       // Add proper spacing after title (scaled)
       y += 48 * scale; // A touch more gap between title and subtitle
       renderCtx.fillText(sub, colX, y);
@@ -372,18 +372,18 @@
       const nativeAuthorSize = 175; // Increased from 70 to make it 2.5x bigger
       const authorSize = nativeAuthorSize * scale;
       const text = author; // Keep mixed case as entered
-      
+
       renderCtx.font = `normal ${authorSize}px '${bodyFamily}', system-ui`;
       renderCtx.fillStyle = ink;
       renderCtx.textBaseline = 'alphabetic';
-      
+
       // Position halfway down the page
       const ay = H / 2;
-      
+
       // Right-justify the text
       const textWidth = renderCtx.measureText(text).width;
       const ax = W - pad - textWidth; // Right edge minus padding minus text width
-      
+
       renderCtx.fillText(text, ax, ay);
     }
 
@@ -391,19 +391,19 @@
     if(state.logo){
       // Fixed scale - 2.5x bigger than before (applied to native units)
       const logoScale = 1.0; // Increased from 0.40 to make it 2.5x bigger
-      
+
       // Margin also 2.5x bigger (75px instead of 30px) - in native units
       const nativeMargin = 75; // Increased from 30 to make it 2.5x further from edges
       const margin = nativeMargin * scale; // Equal margin from bottom and right edges
-      
+
       // Calculate logo dimensions (scaled)
       const lw = state.logo.width * logoScale * scale;
       const lh = state.logo.height * logoScale * scale;
-      
+
       // Position at bottom-right with equal margins
       const lx = W - margin - lw; // Right edge minus margin minus logo width
       const ly = H - margin - lh; // Bottom edge minus margin minus logo height
-      
+
       // Draw logo directly (no background pill)
       renderCtx.drawImage(state.logo, lx, ly, lw, lh);
     }
@@ -428,7 +428,7 @@
     }
     return {size, width:w};
   }
-  
+
   function measureWithTrackingForContext(renderCtx, text, letter){
     if(!letter) return renderCtx.measureText(text).width;
     let w = 0; const m = renderCtx.measureText(text);
@@ -436,7 +436,7 @@
     w = m.width + letter * Math.max(0, (text?.length||0)-1);
     return w;
   }
-  
+
   function drawTrackedTextForContext(renderCtx, text, x, y, letter){
     if(!letter){ renderCtx.fillText(text, x, y); return; }
     // draw char by char with tracking
